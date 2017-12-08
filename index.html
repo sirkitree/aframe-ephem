@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ephemeris Rotations | A-Frame</title>
+    <meta name="description" content="Ephemeris Rotations | A-Frame">
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-animation-component/dist/aframe-animation-component.min.js"></script>
+  </head>
+  <body>
+    <a-scene>      
+      <a-box color="tomato" depth="4" height="4" width="4"></a-box>
+      <a-sky color="#ECECEC"></a-sky>
+      <a-entity id="camera-parent" position="0 0 0">
+        <a-camera></a-camera>
+      </a-entity>
+    </a-scene>
+    
+    <script>
+      // it's not recommeded to put script here
+      // @todo: move this to a component (https://aframe.io/docs/0.7.0/introduction/writing-a-component.html)
+      var sceneEl = document.querySelector('a-scene');
+      var marsParent = sceneEl.querySelector('#mars-parent');
+      
+      // here are some planets we'll add dynamically to the scene      
+      //Moon, Mercury, Venus, Sun, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
+      var planets = {
+        moon: "https://www.solarsystemscope.com/Images/textures/textures-full/2k_moon.jpg",
+        mercury: "#abc600",
+        venus: "#00ccce",
+	      sun: "#feb400",
+        mars: "#be0000",
+        jupiter: "#0000cb",
+        saturn: "#a28868",
+        uranus: "#bc00ca",
+        neptune: "#116f43",
+        pluto: "#6b0000"
+      };
+      var planetTotal = 10; // can't count objects easily
+      var i = 0; // keep track of index
+      
+      // create initial elements for copying later
+      var planetEl = document.createElement('a-sphere');
+      planetEl.setAttribute('radius', 1);
+      var planetParentEl = document.createElement('a-entity');
+      
+      for (key in planets) {
+        i = i+1; // increment index to pass to drawPoints()
+        
+        var coords = drawPoint(1, i, planetTotal);
+        var pos = Math.round(coords[0])/8 +' '+ i +' '+ Math.round(coords[1])/8;
+        //console.log(pos);
+        
+        // create a new sphere element for each planet
+        var thisPlanetEl = planetEl.cloneNode(false);
+        thisPlanetEl.setAttribute('id', key);
+        thisPlanetEl.setAttribute('src', planets[key]);
+        thisPlanetEl.setAttribute('position', pos);
+        //console.log(planetEl);
+        
+        // each planet needs it's own parent in which to apply their own rotations
+        // so that they can rotate independently of one another
+        var thisPlanetParentEl = planetParentEl.cloneNode(false);
+        thisPlanetParentEl.setAttribute('id', key +'-parent');
+        thisPlanetParentEl.setAttribute('animation', 'property: rotation; dir: normal; dur: '+ i +'0000; easing: linear; loop: true; to: 0 360 0');
+        
+        // append the planet to it's parent element
+        thisPlanetParentEl.appendChild(thisPlanetEl);
+        
+        // append the planet parent to the scene
+        sceneEl.appendChild(thisPlanetParentEl);
+      }
+      
+      //console.log(marsParent); //logs the element
+      
+      // this updates the direction to normal instead of alternate (ex of changing animation attributes)
+      marsParent.setAttribute('animation', 'dir', 'normal');
+      
+      // Function to calculate a point on a radius.
+      //   takes the radius, an index for the currentPoint, and the total number of points
+      //   returns the x and z coordinates of this particular index on a point of the radius
+      function drawPoint(r, currentPoint, totalPoints) {
+        var theta = ((Math.PI*2) / totalPoints);
+        var angle = (theta * currentPoint);
+        var x = (100 * Math.cos(angle));
+        var z = (100 * Math.sin(angle));
+        return [x, z];
+      }
+      
+    </script>
+  </body>
+</html>
