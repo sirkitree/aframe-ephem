@@ -4,17 +4,12 @@
     <title>Ephemeris Rotations | A-Frame</title>
     <meta name="description" content="Ephemeris Rotations | A-Frame">
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-<!--   Animation   -->
     <script src="https://unpkg.com/aframe-animation-component/dist/aframe-animation-component.min.js"></script>
-<!--   Sound   -->
-<!--     <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
-    <script src="https://cdn.rawgit.com/etiennepinchon/aframe-resonance/master/dist/aframe-resonance.min.js"></script> -->
   </head>
   <body>
-    <a-scene>
-      <a-entity id="leftHand" hand-controls="left"></a-entity>
-      <a-entity id="rightHand" hand-controls="right"></a-entity>
-      <a-sky src="https://rawgit.com/sirkitree/aframe-ephem/glitch/img/stars_milky_way.jpg"></a-sky>
+    <a-scene>      
+      <a-box color="tomato" depth="4" height="4" width="4"></a-box>
+      <a-sky color="#ECECEC"></a-sky>
       <a-entity id="camera-parent" position="0 0 0">
         <a-camera></a-camera>
       </a-entity>
@@ -29,33 +24,30 @@
       // here are some planets we'll add dynamically to the scene      
       //Moon, Mercury, Venus, Sun, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
       var planets = {
-        moon: "https://rawgit.com/sirkitree/aframe-ephem/glitch/img/2k_moon_preview.jpeg",
-        mercury: "https://rawgit.com/sirkitree/aframe-ephem/glitch/img/2k_mercury_preview.jpeg",
-        venus: "https://rawgit.com/sirkitree/aframe-ephem/glitch/img/2k_venus_preview.jpeg",
-	      sun: "https://rawgit.com/sirkitree/aframe-ephem/glitch/img/2k_sun_preview.jpeg",
-        mars: "https://rawgit.com/sirkitree/aframe-ephem/glitch/img/2k_mars_preview.jpeg",
-        jupiter: "https://rawgit.com/sirkitree/aframe-ephem/glitch/img/2k_jupiter_preview.jpeg",
-        saturn: "https://rawgit.com/sirkitree/aframe-ephem/glitch/img/2k_saturn_preview.jpeg",
-        uranus: "https://rawgit.com/sirkitree/aframe-ephem/glitch/img/2k_uranus_preview.jpeg",
-        neptune: "https://rawgit.com/sirkitree/aframe-ephem/glitch/img/2k_neptune_preview.jpeg",
-        pluto: "https://rawgit.com/sirkitree/aframe-ephem/glitch/img/4k_pluto_preview.jpeg"
+        moon: "https://www.solarsystemscope.com/Images/textures/textures-full/2k_moon.jpg",
+        mercury: "#abc600",
+        venus: "#00ccce",
+	      sun: "#feb400",
+        mars: "#be0000",
+        jupiter: "#0000cb",
+        saturn: "#a28868",
+        uranus: "#bc00ca",
+        neptune: "#116f43",
+        pluto: "#6b0000"
       };
       var planetTotal = 10; // can't count objects easily
-      var planetRadius = .100;
       var i = 0; // keep track of index
-      var startPos = -1;
-      var divider = 100; // higher numbers bring the radius in
       
       // create initial elements for copying later
       var planetEl = document.createElement('a-sphere');
-      planetEl.setAttribute('radius', planetRadius);
+      planetEl.setAttribute('radius', 1);
       var planetParentEl = document.createElement('a-entity');
       
       for (key in planets) {
-        i = i+1; // increment index to pass to drawPoint()
+        i = i+1; // increment index to pass to drawPoints()
         
         var coords = drawPoint(1, i, planetTotal);
-        var pos = Math.round(coords[0])/divider +' '+ (startPos + (i * 2) / planetTotal) *-1 +' '+ Math.round(coords[1])/divider;
+        var pos = Math.round(coords[0])/8 +' '+ i +' '+ Math.round(coords[1])/8;
         //console.log(pos);
         
         // create a new sphere element for each planet
@@ -63,10 +55,6 @@
         thisPlanetEl.setAttribute('id', key);
         thisPlanetEl.setAttribute('src', planets[key]);
         thisPlanetEl.setAttribute('position', pos);
-        
-        if (key !== 'moon' && key !== 'sun') {
-          thisPlanetEl.setAttribute('sound', 'src: url(https://rawgit.com/sirkitree/aframe-ephem/glitch/audio/' + key + '.wav); autoplay: true; loop: true; volume: .0100');
-        }
         //console.log(planetEl);
         
         // each planet needs it's own parent in which to apply their own rotations
@@ -85,7 +73,7 @@
       //console.log(marsParent); //logs the element
       
       // this updates the direction to normal instead of alternate (ex of changing animation attributes)
-      // marsParent.setAttribute('animation', 'dir', 'normal');
+      marsParent.setAttribute('animation', 'dir', 'normal');
       
       // Function to calculate a point on a radius.
       //   takes the radius, an index for the currentPoint, and the total number of points
