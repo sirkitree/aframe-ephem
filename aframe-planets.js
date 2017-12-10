@@ -24,7 +24,7 @@ AFRAME.registerComponent('planets', {
       var planetRadius = .100;
       var index = 0; // index tracker
       var startPos = -1;
-      var radiusDivider = 100; // higher numbers bring the radius inward towards the user
+      var radiusDivider = 90; // higher numbers bring the radius inward towards the user
 
       // create initial elements for copying later
       var planetEl = document.createElement('a-sphere');
@@ -39,7 +39,7 @@ AFRAME.registerComponent('planets', {
         var xPos = Math.round(coords[0]);
         var zPos = Math.round(coords[1]);
         var yPos = (startPos + (index * 2) / planetTotal) * -1;
-        var pos = xPos/radiusDivider +' '+ yPos +' '+ yPos/radiusDivider;
+        var pos = xPos/radiusDivider +' '+ yPos +' '+ zPos/radiusDivider;
         // console.log(pos);
 
         // create a new sphere element for each planet by copying the ones we setup in our initial var declarations
