@@ -6,6 +6,8 @@
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
 <!--   Animation   -->
     <script src="https://unpkg.com/aframe-animation-component/dist/aframe-animation-component.min.js"></script>
+<!--   Teleport   -->
+    <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
 <!--   Sound   -->
 <!--     <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
     <script src="https://cdn.rawgit.com/etiennepinchon/aframe-resonance/master/dist/aframe-resonance.min.js"></script> -->
@@ -15,10 +17,10 @@
   <body>
     <a-scene>
       <a-entity planets></a-entity>
-      <a-entity id="leftHand" hand-controls="left"></a-entity>
-      <a-entity id="rightHand" hand-controls="right"></a-entity>
+      <a-entity id="leftHand" hand-controls="left" teleport-controls></a-entity>
+      <a-entity id="rightHand" hand-controls="right" teleport-controls></a-entity>
       <a-sky src="https://rawgit.com/sirkitree/aframe-ephem/master/img/stars_milky_way.jpg"></a-sky>
-      <a-entity id="camera-parent" position="0 0 0">
+      <a-entity id="camera-parent" position="0 -1.5 0">
         <a-camera></a-camera>
       </a-entity>
     </a-scene>
