@@ -4,25 +4,54 @@
     <title>Ephemeris Rotations | A-Frame</title>
     <meta name="description" content="Ephemeris Rotations | A-Frame">
     <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
-<!--   Animation   -->
+    
+    <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
+    
+    <!--   Physics   -->
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v2.1.0/dist/aframe-physics-system.min.js"></script>
+    <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.min.js"></script>
+    
+    <!--   Extras and Superhands   -->
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.12.4/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
+    
+    <!--   Animation   -->
     <script src="https://unpkg.com/aframe-animation-component/dist/aframe-animation-component.min.js"></script>
-<!--   Teleport   -->
+    
+    <!--   Teleport   -->
     <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
-<!--   Sound   -->
+    
+    <!--   Sound   -->
 <!--     <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
     <script src="https://cdn.rawgit.com/etiennepinchon/aframe-resonance/master/dist/aframe-resonance.min.js"></script> -->
-<!--   Planets   -->
+    
+    <!--   Ephemeris Calculations   -->
+    <script src="https://rawgit.com/mivion/ephemeris/master/build/ephemeris-0.1.0.min.js"></script>
+    
+    <!--   Planets   -->
     <script src="/aframe-planets.js"></script>
   </head>
   <body>
-    <a-scene>
-      <a-entity planets></a-entity>
-      <a-entity id="leftHand" hand-controls="left" teleport-controls></a-entity>
-      <a-entity id="rightHand" hand-controls="right" teleport-controls></a-entity>
+    <a-scene physics="gravity: 0">
+      <a-assets>
+        <a-mixin id="controller"
+                 physics-collider
+                 static-body="shape: sphere; sphereRadius: 0.02"
+                 super-hands="colliderEvent: collisions; colliderEventProperty: els;
+                              colliderEndEvent: collisions; colliderEndEventProperty: clearedEls;">
+        </a-mixin>
+      </a-assets>
+      
+      <a-entity planets position="0 1.5 0"></a-entity>
+      
       <a-sky src="https://rawgit.com/sirkitree/aframe-ephem/master/img/stars_milky_way.jpg"></a-sky>
-      <a-entity id="camera-parent" position="0 -1.5 0">
-        <a-camera></a-camera>
+      <a-entity id="camera-parent" position="0 0 0">
+        <a-camera></a-camera>      
+        <a-entity id="leftHand" hand-controls="left" mixin="controller" teleport-controls></a-entity>
+        <a-entity id="rightHand" hand-controls="right" mixin="controller" teleport-controls></a-entity>
       </a-entity>
+      <!-- ground collider keeps objets from falling -->
+      <a-box class="ground" position="0 -3 0" static-body width="100" height="0.001" depth="100" visible="false"></a-box>
     </a-scene>
   </body>
 </html>
