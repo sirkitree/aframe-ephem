@@ -16,10 +16,16 @@
     <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
     
     <!--   Animation   -->
-    <script src="https://unpkg.com/aframe-animation-component/dist/aframe-animation-component.min.js"></script>
+<!--     <script src="https://unpkg.com/aframe-animation-component/dist/aframe-animation-component.min.js"></script> -->
     
     <!--   Teleport   -->
     <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+
+    <!-- Include component script into your project along with A-Frame. -->
+    <script src="https://rawgit.com/caseyyee/aframe-ui-widgets/master/dist/aframe-ui-widgets.min.js"></script>
+
+    <!-- util to help with date conversion -->
+    <script src="https://rawgit.com/jonhester/julian-date/master/dist/julianDate.min.js"></script>
     
     <!--   Sound   -->
 <!--     <script src="https://cdn.jsdelivr.net/npm/resonance-audio/build/resonance-audio.min.js"></script>
@@ -43,6 +49,14 @@
       </a-assets>
       
       <a-entity planets position="0 1.5 0"></a-entity>
+      
+      <a-text id="radialText" 
+              value="inc" 
+              look-at="[camera]" 
+              scale=".125 .125 .125" 
+              position="0.344 1.361 -0.185" 
+              rotation="0 -90 0"></a-text>
+      <a-entity ui-rotary id="date-radial" position=".5 1.5 0" rotation="-45 45 45"></a-entity>
       
       <a-sky src="https://rawgit.com/sirkitree/aframe-ephem/master/img/stars_milky_way.jpg"></a-sky>
       <a-entity id="camera-parent" position="0 0 0">
